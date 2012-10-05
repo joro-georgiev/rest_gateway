@@ -1,5 +1,7 @@
 package com.electrical_mind.rest.service.context.handler;
 
+import java.util.Map;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,7 +22,7 @@ public class EntityHandler {
 	}
 	
 	@POST
-	public Object updateEntity( Object entityData ) {
+	public Object updateEntity( Map<String, String> entityData ) {
 		return null;
 	}
 	
