@@ -11,6 +11,7 @@
 	<parent>
 		<groupId>com.electrical-mind.rest</groupId>
 		<artifactId>rest-gateway-parent</artifactId>
+		<relativePath>../../pom.xml</relativePath>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
