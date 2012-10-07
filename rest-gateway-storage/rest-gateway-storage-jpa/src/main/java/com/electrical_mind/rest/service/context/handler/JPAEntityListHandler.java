@@ -1,15 +1,14 @@
 package com.electrical_mind.rest.service.context.handler;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 
-
-public class JPAEntityHandler<E, D> extends EntityHandler<D> {
+public class JPAEntityListHandler<E> extends EntityListHandler<E> {
 
 	@Inject
 	private EntityManager em;
@@ -17,26 +16,16 @@ public class JPAEntityHandler<E, D> extends EntityHandler<D> {
 	
 	@Override
 	@GET
-	public E getEntity() {
-		return em.find( entityClass(), getId() );
-	}
-	
-	@Override
-	@POST
-	public Object updateEntity( D entityData ) {
-		D result = em().merge( entityData );
-		return result;
-	}
-	
-	@Override
-	@DELETE
-	public void deleteEntity() {
-		E entity = getEntity();
-		em.remove( entity );
+	@SuppressWarnings("unchecked")
+	public List<? extends Object> listEntities() {
+		return (List<? extends Object>) em.createQuery( em.getCriteriaBuilder().createQuery( entityClass() ) );
 	}
 
-	protected EntityManager em() {
-		return em;
+	@Override
+	@PUT
+	public Object createEntity(E entityData) {
+		em.persist( entityData );
+		return entityData;
 	}
 	
 	@SuppressWarnings("unchecked")

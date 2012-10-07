@@ -1,6 +1,5 @@
 package com.electrical_mind.rest.service.context.handler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -11,16 +10,12 @@ import javax.ws.rs.core.MediaType;
 
 @Consumes( MediaType.APPLICATION_JSON )
 @Produces( MediaType.APPLICATION_JSON )
-public class EntityListHandler {
+public abstract class EntityListHandler<D> {
 	
 	@GET
-	public List<Object> listEntities() {
-		return new ArrayList<>();
-	}
+	public abstract List<? extends Object> listEntities();
 	
 	@PUT
-	public Object createEntity( Object entityData ) {
-		return null;
-	}
+	public abstract Object createEntity( D entityData );
 }
 

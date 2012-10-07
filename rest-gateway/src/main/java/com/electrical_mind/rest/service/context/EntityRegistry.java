@@ -12,20 +12,20 @@ public class EntityRegistry {
 
 	private static class EntityHandlers {
 		
-		private Class<? extends EntityHandler> handler;
+		private Class<? extends EntityHandler<?>> handler;
 		
-		private Class<? extends EntityListHandler> listHandler;
+		private Class<? extends EntityListHandler<?>> listHandler;
 
-		public EntityHandlers(Class<? extends EntityHandler> handler, Class<? extends EntityListHandler> listHandler) {
+		public EntityHandlers(Class<? extends EntityHandler<?>> handler, Class<? extends EntityListHandler<?>> listHandler) {
 			this.handler = handler;
 			this.listHandler = listHandler;
 		}
 
-		public Class<? extends EntityHandler> getHandler() {
+		public Class<? extends EntityHandler<?>> getHandler() {
 			return handler;
 		}
 
-		public Class<? extends EntityListHandler> getListHandler() {
+		public Class<? extends EntityListHandler<?>> getListHandler() {
 			return listHandler;
 		}
 	}
@@ -33,15 +33,15 @@ public class EntityRegistry {
 	
 	private Map<String, EntityHandlers> handlers = new HashMap<>();
 	
-	public Class<? extends EntityHandler> getHandler( String entityType ) {
+	public Class<? extends EntityHandler<?>> getHandler( String entityType ) {
 		return handlers.get(entityType) != null ? handlers.get(entityType).getHandler() : null;
 	}
 	
-	public Class<? extends EntityListHandler> getListHandler( String entityType ) {
+	public Class<? extends EntityListHandler<?>> getListHandler( String entityType ) {
 		return handlers.get(entityType) != null ? handlers.get(entityType).getListHandler() : null;
 	}
 	
-	public EntityRegistry addHandlers( String entityType, Class<? extends EntityListHandler> listHandler, Class<? extends EntityHandler> handler ) {
+	public EntityRegistry addHandlers( String entityType, Class<? extends EntityListHandler<?>> listHandler, Class<? extends EntityHandler<?>> handler ) {
 		handlers.put( entityType, new EntityHandlers(handler, listHandler) );
 		return this;
 	}

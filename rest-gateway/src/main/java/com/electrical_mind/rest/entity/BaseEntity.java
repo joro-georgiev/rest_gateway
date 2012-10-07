@@ -20,10 +20,13 @@ public class BaseEntity {
 	
 	@Override
 	public String toString() {
-		return Objects.toString( this );
+		return String.format( "[%s -id: %s %s]", getClass().getSimpleName(), id, additionalToString() );
 	}
 	
-	
+	protected String additionalToString() {
+		return "";
+	}
+
 	public String getId() {
 		return id;
 	}

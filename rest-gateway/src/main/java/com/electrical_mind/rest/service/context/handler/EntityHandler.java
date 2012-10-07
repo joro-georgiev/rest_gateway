@@ -1,7 +1,5 @@
 package com.electrical_mind.rest.service.context.handler;
 
-import java.util.Map;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,24 +10,18 @@ import javax.ws.rs.core.MediaType;
 
 @Consumes( MediaType.APPLICATION_JSON )
 @Produces( MediaType.APPLICATION_JSON )
-public class EntityHandler {
+public abstract class EntityHandler<D> {
 
 	private String id;
 	
 	@GET
-	public Object getEntity() {
-		return id;
-	}
+	public abstract Object getEntity();
 	
 	@POST
-	public Object updateEntity( Map<String, String> entityData ) {
-		return null;
-	}
-	
+	public abstract Object updateEntity( D entityData );
+
 	@DELETE
-	public void deleteEntity() {
-		
-	}
+	public abstract void deleteEntity();
 
 	public String getId() {
 		return id;

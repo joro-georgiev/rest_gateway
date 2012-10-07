@@ -21,9 +21,11 @@ public class EntityService {
 	private RestServiceContext serviceContext;
 	
 	@Path("/{entityType}")
-	public EntityListHandler getEntities( @PathParam("entityType") String entityType ) throws UnhandledEntityTypeException {
+	public EntityListHandler<?> getEntities( 
+			@PathParam("entityType") String entityType
+		) throws UnhandledEntityTypeException {
 		
-		Class<? extends EntityListHandler> listHandler = serviceContext.getEntityRegistry().getListHandler(entityType);
+		Class<? extends EntityListHandler<?>> listHandler = serviceContext.getEntityRegistry().getListHandler(entityType);
 		
 		if ( listHandler == null ) {
 			throw new UnhandledEntityTypeException();
@@ -33,14 +35,18 @@ public class EntityService {
 	}
 	
 	@Path("/{entityType}/{id}")
-	public EntityHandler getEntity( @PathParam("entityType") String entityType, @PathParam("id") final String id ) throws UnhandledEntityTypeException {
-		Class<? extends EntityHandler> entityHandler = serviceContext.getEntityRegistry().getHandler(entityType);
+	public EntityHandler<?> getEntity( 
+			@PathParam("entityType") String entityType, 
+			@PathParam("id") final String id 
+		) throws UnhandledEntityTypeException {
+		
+		Class<? extends EntityHandler<?>> entityHandler = serviceContext.getEntityRegistry().getHandler(entityType);
 		
 		if ( entityHandler == null ) {
 			throw new UnhandledEntityTypeException();
 		}
 		
-		EntityHandler handler = resourceContext.getResource( entityHandler );
+		EntityHandler<?> handler = resourceContext.getResource( entityHandler );
 		handler.setId(id);
 		return handler;
 	}
