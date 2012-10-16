@@ -1,36 +1,53 @@
 package com.electrical_mind.rest.service.context.handler;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 
-public class JPAEntityListHandler<E> extends EntityListHandler<E> {
+import com.electrical_mind.rest.service.aspect.PersistenceService;
+import com.electrical_mind.rest.service.context.annotation.Transactional;
 
+
+public class JPAEntityListHandler<E> extends EntityListHandler<E> implements PersistenceService {
+
+	private Class<? extends E> entityClass;
+	
 	@Inject
 	private EntityManager em;
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@GET
-	@SuppressWarnings("unchecked")
+	@Transactional
 	public List<? extends Object> listEntities() {
-		return (List<? extends Object>) em.createQuery( em.getCriteriaBuilder().createQuery( entityClass() ) );
+		Query query = em.createQuery( em.getCriteriaBuilder().createQuery( entityClass ) );
+		return query.getResultList();
 	}
 
 	@Override
 	@PUT
+	@Transactional
 	public Object createEntity(E entityData) {
 		em.persist( entityData );
 		return entityData;
 	}
 	
-	@SuppressWarnings("unchecked")
-	private Class<? extends E> entityClass() {
-		ParameterizedType pType = (ParameterizedType) getClass().getGenericSuperclass();
-		return (Class<? extends E>) pType.getActualTypeArguments()[0];
+	
+	@Override
+	public EntityManager entityManager() {
+		return em;
+	}
+	
+	public Class<? extends E> getEntityClass() {
+		return entityClass;
+	}
+
+	public void setEntityClass(Class<? extends E> entityClass) {
+		this.entityClass = entityClass;
 	}
 }

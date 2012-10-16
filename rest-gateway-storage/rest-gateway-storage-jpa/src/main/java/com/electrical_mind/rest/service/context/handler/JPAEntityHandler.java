@@ -1,47 +1,55 @@
 package com.electrical_mind.rest.service.context.handler;
 
-import java.lang.reflect.ParameterizedType;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
+import com.electrical_mind.rest.service.aspect.PersistenceService;
+import com.electrical_mind.rest.service.context.annotation.Transactional;
 
-public class JPAEntityHandler<E, D> extends EntityHandler<D> {
+
+public class JPAEntityHandler<E, D> extends EntityHandler<D> implements PersistenceService {
 
 	@Inject
 	private EntityManager em;
 	
+	private Class<? extends E> entityClass;
 	
 	@Override
 	@GET
+	@Transactional
 	public E getEntity() {
-		return em.find( entityClass(), getId() );
+		return em.find( entityClass, getId() );
 	}
 	
 	@Override
 	@POST
+	@Transactional
 	public Object updateEntity( D entityData ) {
-		D result = em().merge( entityData );
+		D result = entityManager().merge( entityData );
 		return result;
 	}
 	
 	@Override
 	@DELETE
+	@Transactional
 	public void deleteEntity() {
 		E entity = getEntity();
 		em.remove( entity );
 	}
 
-	protected EntityManager em() {
+	@Override
+	public EntityManager entityManager() {
 		return em;
 	}
-	
-	@SuppressWarnings("unchecked")
-	private Class<? extends E> entityClass() {
-		ParameterizedType pType = (ParameterizedType) getClass().getGenericSuperclass();
-		return (Class<? extends E>) pType.getActualTypeArguments()[0];
+
+	public Class<? extends E> getEntityClass() {
+		return entityClass;
+	}
+
+	public void setEntityClass(Class<? extends E> entityClass) {
+		this.entityClass = entityClass;
 	}
 }

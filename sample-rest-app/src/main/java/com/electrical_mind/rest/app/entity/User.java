@@ -1,7 +1,12 @@
 package com.electrical_mind.rest.app.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import com.electrical_mind.rest.entity.BaseEntity;
 
+@Entity
+@Table( name="sample_rest_app_user" )
 public class User extends BaseEntity {
 
 	private String name;

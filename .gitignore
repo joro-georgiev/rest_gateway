@@ -21,6 +21,10 @@ Servers/
 #Maven
 target
 
+Derby database
+sample_rest_app_db
+derby.log
+
 # External tool builders
 .externalToolBuilders/
 
