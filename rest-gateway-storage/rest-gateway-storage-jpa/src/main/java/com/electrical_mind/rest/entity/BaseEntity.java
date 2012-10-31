@@ -1,5 +1,6 @@
 package com.electrical_mind.rest.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.GeneratedValue;
@@ -8,8 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class BaseEntity {
+public class BaseEntity implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String id;

@@ -1,6 +1,7 @@
 package com.electrical_mind.rest.service;
 
 import javax.inject.Inject;
+
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
@@ -20,20 +21,25 @@ public class EntityService {
 	@Inject
 	private RestServiceContext serviceContext;
 	
+	@SuppressWarnings("unchecked")
 	@Path("/{entityType}")
 	public EntityListHandler<?> getEntities( 
 			@PathParam("entityType") String entityType
 		) throws UnhandledEntityTypeException {
 		
-		Class<? extends EntityListHandler<?>> listHandler = serviceContext.getEntityRegistry().getListHandler(entityType);
+		Class<? extends EntityListHandler<?>> listHandlerClass = serviceContext.getEntityRegistry().getListHandler(entityType);
 		
-		if ( listHandler == null ) {
+		if ( listHandlerClass == null ) {
 			throw new UnhandledEntityTypeException();
 		}
 		
-		return resourceContext.getResource( listHandler );
+		EntityListHandler<Object> handler = listHandler( listHandlerClass );
+		Class<Object> entityClass = (Class<Object>) entityClass(entityType);
+		handler.setEntityClass( entityClass );
+		return handler;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Path("/{entityType}/{id}")
 	public EntityHandler<?> getEntity( 
 			@PathParam("entityType") String entityType, 
@@ -46,9 +52,24 @@ public class EntityService {
 			throw new UnhandledEntityTypeException();
 		}
 		
-		EntityHandler<?> handler = resourceContext.getResource( entityHandler );
+		EntityHandler<Object> handler = entityHandler( entityHandler );
+		Class<Object> entityClass = (Class<Object>) entityClass(entityType);
+		handler.setEntityClass( entityClass );
 		handler.setId(id);
 		return handler;
 	}
 	
+	@SuppressWarnings("unchecked")
+	protected <T> EntityListHandler<T> listHandler( Class<? extends EntityListHandler<? extends T>> handlerClass ) {
+		return (EntityListHandler<T>) resourceContext.getResource( handlerClass );
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected <T> EntityHandler<T> entityHandler( Class<? extends EntityHandler<? extends T>> handlerClass ) {
+		return (EntityHandler<T>) resourceContext.getResource( handlerClass );
+	}
+	
+	protected Class<?> entityClass( String entityType ) {
+		return serviceContext.getEntityRegistry().getConfig( entityType ).getEntityClass();
+	}
 }

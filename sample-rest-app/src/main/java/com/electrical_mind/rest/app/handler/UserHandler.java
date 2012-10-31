@@ -21,9 +21,9 @@ public class UserHandler extends EntityHandler<User> {
 
 	@Override
 	@POST
-	public Object updateEntity(User entityData) {
-		System.out.println( entityData );
-		return entityData;
+	public Object updateEntity(User user) {
+		System.out.println( user );
+		return user;
 	}
 
 	@Override

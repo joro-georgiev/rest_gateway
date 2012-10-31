@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.electrical_mind.rest.app.config.SampleRestAppModule;
+import com.electrical_mind.rest.PersistenceTestModule;
 import com.electrical_mind.rest.app.entity.User;
 import com.electrical_mind.rest.service.context.handler.JPAEntityHandler;
 import com.electrical_mind.rest.service.context.handler.JPAEntityListHandler;
@@ -16,14 +16,17 @@ import com.google.inject.Injector;
 
 public class PersistenceTest {
 
+	private static final String ENTITY_TYPE = "user";
+	
 	private static JPAEntityListHandler<User> userListHandler;
 	
-	private static JPAEntityHandler<User, User> userHandler;
+	private static JPAEntityHandler<User> userHandler;
+	
 	
 	@SuppressWarnings("unchecked")
 	@BeforeClass
 	public static void init() {
-		Injector injector = Guice.createInjector( new SampleRestAppModule() );
+		Injector injector = Guice.createInjector( new PersistenceTestModule( ENTITY_TYPE ) );
 		
 		userListHandler = injector.getInstance( JPAEntityListHandler.class );
 		userListHandler.setEntityClass( User.class );
@@ -48,7 +51,7 @@ public class PersistenceTest {
 		user.setName( "test" );
 		user.setEmail( "test@example.org" );
 		
-		assertNotNull( userListHandler.createEntity( user ) );
+		assertNotNull( userListHandler.doCreateEntity( user ) );
 		
 		List<User> users = (List<User>) userListHandler.listEntities();
 		

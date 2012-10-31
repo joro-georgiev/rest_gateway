@@ -25,7 +25,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 				
 				Map<String, String> params = new HashMap<String, String>();
                 params.put( "com.sun.jersey.api.json.POJOMappingFeature", "true" );
-                params.put( "com.sun.jersey.config.property.packages", "com.electrical_mind.rest.guice.service" );
+                params.put( "com.sun.jersey.config.property.packages", "com.electrical_mind.rest.jee6.service" );
 				
 	            serve("/rest/*").with(GuiceContainer.class, params);
 			}

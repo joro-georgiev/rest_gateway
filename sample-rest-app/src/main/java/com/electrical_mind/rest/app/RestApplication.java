@@ -1,4 +1,4 @@
-package com.electrical_mind.rest;
+package com.electrical_mind.rest.app;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,7 +19,7 @@ public class RestApplication {
 		@Override
 		public void run() {
 			
-			ResourceConfig rc = new PackagesResourceConfig("com.omgm.rest.jsonp");
+			ResourceConfig rc = new PackagesResourceConfig("com.electrical_mind.rest.jsonp");
 			URI serverUri =  UriBuilder.fromUri("http://localhost/").port( 9090 ).build();
 			
 			startServer( serverUri , rc);

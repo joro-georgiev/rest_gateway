@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.electrical-mind.rest</groupId>
+	<artifactId>sample-jee6-app</artifactId>
+	<packaging>war</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>sample-jee6-app</name>
+	<url>http://maven.apache.org</url>
+
+	<parent>
+		<groupId>com.electrical-mind.rest</groupId>
+		<artifactId>rest-gateway-parent</artifactId>
+		<relativePath>../../pom.xml</relativePath>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<guice.version>3.0</guice.version>
+		<wtpversion>2.0</wtpversion>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.electrical-mind.rest</groupId>
+			<artifactId>rest-gateway</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.electrical-mind.rest</groupId>
+			<artifactId>rest-gateway-storage-jpa</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.9.1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-guice</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-servlet</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+		
+	</dependencies>
+
+</project>

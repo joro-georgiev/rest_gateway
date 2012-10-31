@@ -9,26 +9,23 @@ import javax.ws.rs.POST;
 import com.electrical_mind.rest.service.aspect.PersistenceService;
 import com.electrical_mind.rest.service.context.annotation.Transactional;
 
-
-public class JPAEntityHandler<E, D> extends EntityHandler<D> implements PersistenceService {
+public class JPAEntityHandler<E> extends EntityHandler<E> implements PersistenceService {
 
 	@Inject
 	private EntityManager em;
 	
-	private Class<? extends E> entityClass;
-	
 	@Override
 	@GET
 	@Transactional
-	public E getEntity() {
-		return em.find( entityClass, getId() );
+	public Object getEntity() {
+		return em.find( getEntityClass(), getId() );
 	}
 	
 	@Override
 	@POST
 	@Transactional
-	public Object updateEntity( D entityData ) {
-		D result = entityManager().merge( entityData );
+	public Object updateEntity( E entityData ) {
+		Object result = entityManager().merge( entityData );
 		return result;
 	}
 	
@@ -36,20 +33,14 @@ public class JPAEntityHandler<E, D> extends EntityHandler<D> implements Persiste
 	@DELETE
 	@Transactional
 	public void deleteEntity() {
-		E entity = getEntity();
+		E entity = em.find( getEntityClass(), getId() );
 		em.remove( entity );
+		em.flush();
 	}
 
 	@Override
 	public EntityManager entityManager() {
 		return em;
 	}
-
-	public Class<? extends E> getEntityClass() {
-		return entityClass;
-	}
-
-	public void setEntityClass(Class<? extends E> entityClass) {
-		this.entityClass = entityClass;
-	}
 }
+

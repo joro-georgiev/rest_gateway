@@ -1,44 +1,51 @@
 package com.electrical_mind.rest.service.aspect;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 import org.apache.log4j.Logger;
 
 
-public class TransactionalAspect implements MethodInterceptor {
+public class TransactionalAspect {
 
 	private static final Logger LOG = Logger.getLogger( TransactionalAspect.class );
 	
-	@Override
-	public Object invoke( MethodInvocation invocation ) throws Throwable {
+	
+	public static interface TransactionalTask {
+	
+		String name();
 		
-		if ( !(invocation.getThis() instanceof PersistenceService) ) {
-			throw new IllegalStateException( "Annotation @Transactional shoud be applied only to instances of PersistenceService" );
-		}
+		Object execute() throws Throwable;
 		
-		LOG.info( "Executing in transaction: " + invocation.getMethod().getName() );
+		EntityManager entityManager();
+	}
+	
+	
+	public Object supportTransaction( TransactionalTask task ) throws Throwable {
 		
-		PersistenceService ps = (PersistenceService) invocation.getThis();
+		LOG.info( "Executing in transaction: " + task.name() );
 		
-		EntityTransaction t = ps.entityManager().getTransaction();
+		EntityTransaction t = task.entityManager().getTransaction();
 		
 		if ( t.isActive() ) {
-			return invocation.proceed();
+			LOG.info( "Transaction already active. Continuing: " + task.name() );
+			return task.execute();
 		}
 		
 		try {
 			t.begin();
 			
-			Object result = invocation.proceed();
+			Object result = task.execute();
 			
 			t.commit();
+			
+			LOG.info( task.name() + " executed successfuly" );
 			
 			return result;
 		}
 		finally {
 			if ( t.isActive() ) {
+				LOG.info( task.name() + " rollbacked" );
 				t.rollback();
 			}
 		}

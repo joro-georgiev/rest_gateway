@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 @Consumes( MediaType.APPLICATION_JSON )
 @Produces( MediaType.APPLICATION_JSON )
-public abstract class EntityHandler<D> {
+public abstract class EntityHandler<E> extends BaseEntityHandler<E> {
 
 	private String id;
 	
@@ -18,7 +18,7 @@ public abstract class EntityHandler<D> {
 	public abstract Object getEntity();
 	
 	@POST
-	public abstract Object updateEntity( D entityData );
+	public abstract Object updateEntity( E entityData );
 
 	@DELETE
 	public abstract void deleteEntity();
