@@ -29,10 +29,14 @@
 			<artifactId>rest-gateway</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>com.electrical-mind.rest</groupId>
 			<artifactId>rest-gateway-storage-jpa</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.electrical-mind.rest</groupId>
+			<artifactId>guice-connectors</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		

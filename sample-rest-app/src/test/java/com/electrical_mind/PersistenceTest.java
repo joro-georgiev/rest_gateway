@@ -7,12 +7,14 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.electrical_mind.rest.PersistenceTestModule;
+import com.electrical_mind.rest.app.JPAHandlerConfig;
+import com.electrical_mind.rest.app.config.SampleRestApp;
 import com.electrical_mind.rest.app.entity.User;
 import com.electrical_mind.rest.service.context.handler.JPAEntityHandler;
 import com.electrical_mind.rest.service.context.handler.JPAEntityListHandler;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+
 
 public class PersistenceTest {
 
@@ -26,13 +28,21 @@ public class PersistenceTest {
 	@SuppressWarnings("unchecked")
 	@BeforeClass
 	public static void init() {
-		Injector injector = Guice.createInjector( new PersistenceTestModule( ENTITY_TYPE ) );
+		Injector injector = getInjector();
 		
 		userListHandler = injector.getInstance( JPAEntityListHandler.class );
 		userListHandler.setEntityClass( User.class );
 		
 		userHandler = injector.getInstance( JPAEntityHandler.class );
 		userHandler.setEntityClass( User.class );
+	}
+	
+	private static Injector getInjector() {
+		return Guice.createInjector( 
+			SampleRestApp.Injections.getModule( 
+				JPAHandlerConfig.defaultConfig( ENTITY_TYPE, User.class )
+			)
+		);
 	}
 	
 	@SuppressWarnings("unchecked")

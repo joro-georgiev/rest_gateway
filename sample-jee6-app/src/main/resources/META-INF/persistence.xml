@@ -11,15 +11,15 @@
     <class>com.electrical_mind.rest.entity.User</class>
     
     <properties>
-      <property name="eclipselink.target-database" value="Derby"/>            
+      <property name="eclipselink.target-database" value="Derby"/>  
+                
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:./sample_rest_app_db;create=true"/>
       <property name="javax.persistence.jdbc.user" value="APP"/>
       <property name="javax.persistence.jdbc.password" value="APP"/>
       
-      <property name="eclipselink.logging.level" value="INFO"/>
       <property name="eclipselink.logging.level.sql" value="FINE"/>
-      <property name="eclipselink.logging.session" value="true"/>
+      
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
       <property name="eclipselink.ddl-generation.output-mode" value="database"/>
     </properties>

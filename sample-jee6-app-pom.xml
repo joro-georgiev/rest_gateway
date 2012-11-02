@@ -13,6 +13,7 @@
 		<module>./pom.xml</module>
 		<module>rest-gateway</module>
 		<module>rest-gateway-storage/rest-gateway-storage-jpa</module>
+		<module>guice-connectors</module>
 		<module>sample-jee6-app</module>
 	</modules>
 	

@@ -1,4 +1,4 @@
-package com.electrical_mind.rest.guice;
+package com.electrical_mind.rest.guice.provider;
 
 import java.lang.reflect.Field;
 import java.security.AccessController;

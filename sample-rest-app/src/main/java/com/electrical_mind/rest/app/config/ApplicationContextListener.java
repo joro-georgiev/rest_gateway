@@ -14,7 +14,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 
 	@Override
 	protected Injector getInjector() {
-		return Guice.createInjector( new SampleRestAppModule(), jerseyServletModule() );
+		return Guice.createInjector( SampleRestApp.Injections.getModule(), jerseyServletModule() );
 	}
 	
 	private JerseyServletModule jerseyServletModule() {

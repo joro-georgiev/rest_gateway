@@ -1,4 +1,4 @@
-package com.electrical_mind.rest.guice;
+package com.electrical_mind.rest.guice.interceptor;
 
 import javax.persistence.EntityManager;
 
