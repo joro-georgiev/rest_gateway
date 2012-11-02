@@ -2,6 +2,8 @@ package com.electrical_mind.rest.app.config;
 
 import javax.persistence.EntityManager;
 
+import org.apache.log4j.Logger;
+
 import com.electrical_mind.rest.app.JPAHandlerConfig;
 import com.electrical_mind.rest.app.entity.Rule;
 import com.electrical_mind.rest.app.entity.User;
@@ -23,6 +25,9 @@ public class SampleRestAppModule implements Module {
 		binder.bind( RestServiceContext.class ).toInstance( restServiceContext() );
 		binder.bind( EntityManager.class ).toProvider( EntityManagerProvider.class );
 		
+		binder.bind( Logger.class ).toInstance( Logger.getRootLogger() );
+		binder.bindListener( Matchers.any(), new LoggerTypeListener() );
+		 
 		binder.bindInterceptor( Matchers.any(), Matchers.annotatedWith( Transactional.class), new TranscationInterceptor() );
 	}
 

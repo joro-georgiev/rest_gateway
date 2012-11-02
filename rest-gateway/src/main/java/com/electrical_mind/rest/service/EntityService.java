@@ -1,7 +1,6 @@
 package com.electrical_mind.rest.service;
 
 import javax.inject.Inject;
-
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
@@ -20,6 +19,7 @@ public class EntityService {
 	
 	@Inject
 	private RestServiceContext serviceContext;
+	
 	
 	@SuppressWarnings("unchecked")
 	@Path("/{entityType}")

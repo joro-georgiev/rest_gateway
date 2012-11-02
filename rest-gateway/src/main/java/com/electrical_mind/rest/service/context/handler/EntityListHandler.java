@@ -23,6 +23,9 @@ public abstract class EntityListHandler<E> extends BaseEntityHandler<E> {
 	@PUT
 	public final Object createEntity( String entityData ) {
 		try {
+			
+			log().info( "Creating new entity of type: " + getEntityClass() );
+			
 			E entity = new ObjectMapper().readValue( entityData, getEntityClass() );
 			return doCreateEntity( entity );
 		} catch ( IOException e ) {

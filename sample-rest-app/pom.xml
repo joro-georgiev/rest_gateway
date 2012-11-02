@@ -13,15 +13,6 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<repositories>
-		<repository>
-            <id>EclipseLink Repo</id>
-            <!-- note that ampersands in this URL are escaped because this is in an 
-            xml file - un-escape them to use in browser -->
-            <url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo</url>
-        </repository>
-	</repositories>
-
 	<properties>
 		<guice.version>3.0</guice.version>
 		<wtpversion>2.0</wtpversion>
